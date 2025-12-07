@@ -1,0 +1,74 @@
+=== Welch One-way ANOVA ===
+
+	One-way analysis of means (not assuming equal variances)
+
+data:  On.road.prize and Body.Type
+F = 209362, num df = 63.000, denom df = 44.058, p-value < 2.2e-16
+
+
+Group counts used:
+
+                                                                                                    1023 mm 
+                                                   18                                                     2 
+                                              1079 mm                                               1080 mm 
+                                                    3                                                     2 
+                                                 12 L                                                  14 L 
+                                                    2                                                    20 
+                                                 16 L                                                  17 L 
+                                                    3                                                     3 
+                                                 20 L                                               2090 mm 
+                                                    2                                                     2 
+                                                 22 L                                                685 mm 
+                                                    4                                                     2 
+                                               710 mm                                                720 mm 
+                                                    3                                                     2 
+                                               730 mm                                                737 mm 
+                                                    2                                                     4 
+                                               743 mm                                                750 mm 
+                                                    2                                                     3 
+                                               765 mm                                                780 mm 
+                                                    2                                                     6 
+                                               785 mm                                                786 mm 
+                                                    3                                                     2 
+                                               790 mm                                                792 mm 
+                                                    2                                                     5 
+                                               793 mm                                                803 mm 
+                                                    3                                                     2 
+                                               806 mm                                                820 mm 
+                                                    5                                                     3 
+                                               830 mm                                                835 mm 
+                                                    4                                                     8 
+                                               867 mm                                                890 mm 
+                                                    3                                                     2 
+                                               895 mm                                                915 mm 
+                                                    3                                                     3 
+                                               916 mm                                                922 mm 
+                                                    2                                                     2 
+                                               926 mm                                                964 mm 
+                                                    6                                                     3 
+                                               972 mm                                                990 mm 
+                                                    2                                                     7 
+                                               995 mm                                Adventure Tourer Bikes 
+                                                    3                                                    15 
+Adventure Tourer Bikes, Cruiser Bikes, Off Road Bikes                Adventure Tourer Bikes, Off Road Bikes 
+                                                    3                                                    16 
+          Adventure Tourer Bikes, Sports Tourer Bikes  Adventure Tourer Bikes, Tourer Bikes, Off Road Bikes 
+                                                    2                                                     6 
+                                     Cafe Racer Bikes                                        Commuter Bikes 
+                                                    5                                                    34 
+                                        Cruiser Bikes                       Cruiser Bikes, Cafe Racer Bikes 
+                                                   76                                                     3 
+                          Cruiser Bikes, Tourer Bikes                                               Halogen 
+                                                    2                                                     4 
+                                                  LED                                           Moped Bikes 
+                                                   31                                                     6 
+                                         Sports Bikes                                    Sports Naked Bikes 
+                                                   51                                                    30 
+                 Sports Naked Bikes, Cafe Racer Bikes                      Sports Naked Bikes, Sports Bikes 
+                                                    7                                                     7 
+                                  Sports Tourer Bikes                                           Super Bikes 
+                                                    2                                                     5 
+                            Super Bikes, Sports Bikes                       Super Bikes, Sports Naked Bikes 
+                                                    9                                                     3 
+                                         Tourer Bikes                                                   Yes 
+                                                    6                                                    56 
