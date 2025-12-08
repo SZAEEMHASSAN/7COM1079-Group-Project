@@ -27,9 +27,9 @@ barplot(price_summary$On.road.prize,
 dev.off()
 
 # 6) Save table for appendix
-write.csv(price_summary, "../outputs/avg_price_summary.csv", row.names = FALSE)
+write.csv(price_summary, "../outputs/avgSortedPrice.csv", row.names = FALSE)
 
-cat("✅ Visualisation done: figures/avg_price.png and outputs/avg_price_summary.csv\n")
+cat("visualisation done: figures/avg_price.png and outputs/avgSortedPrice.csv\n")
 
 message("=== visuals_enhanced.R ===")
 cp <- "../data/Bike_Features_clean.csv"
@@ -42,10 +42,9 @@ avg <- avg[order(avg$AveragePrice, decreasing=TRUE), ]
 
 if (!dir.exists("../outputs")) dir.create("../outputs", TRUE)
 if (!dir.exists("../figures")) dir.create("../figures", TRUE)
-write.csv(avg, "../outputs/avg_price_sorted.csv", row.names = FALSE)
+write.csv(avg, "../outputs/avgSortedPrice.csv", row.names = FALSE)
 
-
-png("../figures/avg_price_sorted.png", width=1300, height=700)
+png("../figures/avgSortedPrice.png", width=1300, height=700)
 bp <- barplot(avg$AveragePrice, names.arg=avg$Body.Type, las=2,
               main="Average On-road Price by Body Type (sorted)",
               xlab="Body Type", ylab="Average price (INR)", cex.names=0.8)
@@ -53,4 +52,4 @@ text(x = bp, y = avg$AveragePrice, labels = round(avg$AveragePrice,0),
      pos = 3, cex = 0.7)
 dev.off()
 
-message("✅ Saved figures/avg_price_sorted.png and outputs/avg_price_sorted.csv")
+message("saved figures/avg_price_sorted.png and outputs/avg_price_sorted.csv")
