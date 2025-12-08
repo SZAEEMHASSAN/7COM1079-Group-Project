@@ -103,3 +103,25 @@ if (!dir.exists("../outputs")) dir.create("../outputs", TRUE)
 sink("../outputs/welch_anova_summary.txt")
 cat("=== Welch ANOVA ===\n"); print(w)
 sink()
+
+
+# Games–Howell post-hoc (via rstatix), fallback Tukey
+use_gh <- TRUE
+if (!requireNamespace("rstatix", quietly=TRUE)) {
+  message("Installing rstatix..."); 
+  ok <- tryCatch({install.packages("rstatix", repos="https://cloud.r-project.org"); TRUE},
+                 error=function(e) FALSE)
+  if (!ok) use_gh <- FALSE
+}
+if (use_gh) {
+  suppressPackageStartupMessages(library(rstatix))
+  gh <- games_howell_test(d, On.road.price ~ Body.Type)
+  write.csv(gh, "../outputs/games_howell_posthoc.csv", row.names=FALSE)
+} else {
+  aovm <- aov(On.road.price ~ Body.Type, data=d)
+  tk <- as.data.frame(TukeyHSD(aovm)$Body.Type)
+  tk$comparison <- rownames(tk)
+  tk <- tk[, c("comparison","diff","lwr","upr","p.adj")]
+  write.csv(tk, "../outputs/tukey_posthoc_fallback.csv", row.names=FALSE)
+}
+message("welch + post-hoc outputs saved.")
