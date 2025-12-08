@@ -48,3 +48,25 @@ write.csv(sm[[1]], "../outputs/anova_summary.csv", row.names = TRUE)
 sink("../outputs/anova_summary.txt")
 cat("=== One-way ANOVA (On.road.price ~ Body.Type) ===\n"); print(sm)
 sink()
+
+# Mean ± SE by Body.Type
+m  <- aggregate(On.road.price ~ Body.Type, d, mean)
+n  <- aggregate(On.road.price ~ Body.Type, d, length)
+sd <- aggregate(On.road.price ~ Body.Type, d, sd)
+colnames(m)  <- c("Body.Type","mean")
+colnames(n)  <- c("Body.Type","n")
+colnames(sd) <- c("Body.Type","sd")
+mm <- merge(merge(m,n,"Body.Type"), sd,"Body.Type")
+mm$se <- mm$sd / sqrt(mm$n)
+mm <- mm[order(mm$mean, decreasing=TRUE), ]
+
+# Bar plot with error bars
+if (!dir.exists("../figures")) dir.create("../figures", recursive = TRUE)
+png("../figures/anova_means_se.png", width=1200, height=700)
+bp <- barplot(mm$mean, names.arg = mm$Body.Type, las=2,
+              main="Mean On-road Price by Body Type (±SE)",
+              ylab="Mean price (INR)", cex.names=0.8)
+arrows(bp, mm$mean-mm$se, bp, mm$mean+mm$se, angle=90, code=3, length=0.05)
+dev.off()
+
+message("✅ ANOVA summary & plot saved.")
