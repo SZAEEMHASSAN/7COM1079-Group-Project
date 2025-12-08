@@ -83,4 +83,23 @@ if (use_games_howell) {
   write.csv(tk, "../outputs/tukey_posthoc_fallback.csv", row.names = FALSE)
 }
 
-message("✅ Done: Welch ANOVA + post-hoc. See ../outputs/")
+message("Done: Welch ANOVA + post-hoc. See ../outputs/")
+
+message("=== anova_test.R (Welch + GH) ===")
+cp <- "../data/Bike_Features_clean.csv"
+if (!file.exists(cp)) stop("Cleaned file missing. Run clean_eda.R first.")
+d <- read.csv(cp, stringsAsFactors = TRUE)
+
+# ensure ≥2 obs per group
+keep <- names(which(table(d$Body.Type) >= 2))
+d <- subset(d, Body.Type %in% keep)
+d$Body.Type <- droplevels(d$Body.Type)
+if (nlevels(d$Body.Type) < 2) stop("Not enough Body.Type groups after filtering.")
+
+# Welch ANOVA
+w <- oneway.test(On.road.price ~ Body.Type, data=d, var.equal=FALSE)
+
+if (!dir.exists("../outputs")) dir.create("../outputs", TRUE)
+sink("../outputs/welch_anova_summary.txt")
+cat("=== Welch ANOVA ===\n"); print(w)
+sink()
