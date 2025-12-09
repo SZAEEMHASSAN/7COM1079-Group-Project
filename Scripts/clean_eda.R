@@ -83,6 +83,26 @@ cnts <- as.data.frame(table(clean$Body.Type))
 names(cnts) <- c("Body.Type", "Count")
 write.csv(cnts, out_cnts, row.names = FALSE)
 
-cat("✅ Clean CSV:", out_clean, "\n")
-cat("✅ Figures :", out_hist, "and", out_box, "\n")
-cat("✅ Counts  :", out_cnts, "\n")
+cat("Clean CSV:", out_clean, "\n")
+cat("Figures :", out_hist, "and", out_box, "\n")
+cat("Counts  :", out_cnts, "\n")
+
+
+# Create a data dictionary from cleaned data
+if (exists("clean")) {
+  dict <- data.frame(
+    Column  = names(clean),
+    Type    = sapply(clean, function(x) class(x)[1]),
+    Example = sapply(clean, function(x) {
+      v <- na.omit(x)
+      if (length(v)) as.character(v[1]) else ""
+    }),
+    stringsAsFactors = FALSE
+  )
+  
+  if (!dir.exists("../outputs")) dir.create("../outputs", recursive = TRUE)
+  write.csv(dict, "../outputs/data_dictionary.csv", row.names = FALSE)
+  message("Data dictionary saved as outputs/data_dictionary.csv")
+} else {
+  warning("clean object not found — please run earlier cleaning steps first.")
+}
