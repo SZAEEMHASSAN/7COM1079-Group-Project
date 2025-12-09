@@ -22,3 +22,9 @@ using R programming (cleaning, visualisation, and ANOVA testing).
 3. Run the command:
    ```r
    source("run_all.R")
+
+## Statistical Assumptions (ANOVA)
+
+We validated assumptions on the cleaned dataset: residual normality (Shapiro–Wilk),
+homogeneity of variances (Levene’s test), and reported effect sizes (eta², ω²).
+See `outputs/assumptions_effectsizes.txt` for details.
