@@ -28,3 +28,6 @@ using R programming (cleaning, visualisation, and ANOVA testing).
 We validated assumptions on the cleaned dataset: residual normality (Shapiro–Wilk),
 homogeneity of variances (Levene’s test), and reported effect sizes (eta², ω²).
 See `outputs/assumptions_effectsizes.txt` for details.
+
+## QA Summary
+Final QA check and consistency summary written.
