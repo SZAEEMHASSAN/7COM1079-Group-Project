@@ -1,0 +1,24 @@
+=== Assumptions & Effect Sizes (Vaibhav) ===
+
+Groups used (>=3 obs):
+ Adventure Tourer Bikes, Adventure Tourer Bikes, Cruiser Bikes, Off Road Bikes, Adventure Tourer Bikes, Off Road Bikes, Adventure Tourer Bikes, Tourer Bikes, Off Road Bikes, Cafe Racer Bikes, Commuter Bikes, Cruiser Bikes, Cruiser Bikes, Cafe Racer Bikes, Moped Bikes, Sports Bikes, Sports Naked Bikes, Sports Naked Bikes, Cafe Racer Bikes, Sports Naked Bikes, Sports Bikes, Super Bikes, Super Bikes, Sports Bikes, Super Bikes, Sports Naked Bikes, Tourer Bikes 
+
+Shapiro-Wilk on ANOVA residuals:
+
+	Shapiro-Wilk normality test
+
+data:  res
+W = 0.84775, p-value = 5.528e-16
+
+
+Levene/homoscedasticity check:
+Levene's Test for Homogeneity of Variance (center = median)
+       Df F value    Pr(>F)    
+group  16  2.8505 0.0002632 ***
+      265                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Effect sizes:
+  Eta^2   = 0.4878
+  Omega^2 = 0.4560
