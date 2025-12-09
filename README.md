@@ -14,3 +14,11 @@ using R programming (cleaning, visualisation, and ANOVA testing).
 - Fahad Ali
 - Vaibhav Sirigada
 - Ramya Kotagiri
+
+
+## How to Run the Project
+1. Open the project in RStudio.  
+2. Set the working directory to `Scripts/`.  
+3. Run the command:
+   ```r
+   source("run_all.R")
