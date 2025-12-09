@@ -106,3 +106,8 @@ if (exists("clean")) {
 } else {
   warning("clean object not found — please run earlier cleaning steps first.")
 }
+
+log_line <- paste(Sys.time(), "- clean_eda.R run | rows:", nrow(clean),
+                  "| unique Body.Types:", nlevels(clean$Body.Type))
+cat(log_line, "\n", file = "../outputs/cleaning_log.txt", append = TRUE)
+message("Cleaning log updated in outputs/cleaning_log.txt")
