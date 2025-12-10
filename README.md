@@ -5,9 +5,9 @@ This project explores how different bike body types affect prices
 using R programming (cleaning, visualisation, and ANOVA testing).
 
 ## How to reproduce
-1. Run `scripts/analysis.R`
-2. Figures will be saved in the `fig/` folder.
-3. Report is in `report/Group_Project_Report.docx`.
+1. Run `Scripts/analysis.R`
+2. Figures will be saved in the `figures/` folder.
+3. Report is in `Report/Group_Project_Report.docx`.
 
 ## Contributors
 - Syed Zaeem Hassan
@@ -17,11 +17,14 @@ using R programming (cleaning, visualisation, and ANOVA testing).
 
 
 ## How to Run the Project
-1. Open the project in RStudio.  
-2. Set the working directory to `Scripts/`.  
-3. Run the command:
-   ```r
-   source("run_all.R")
+1) Install R (>=4.3) & RStudio (optional)
+2) In R console:
+   install.packages("renv")
+3) Clone this repo, then in the project root run:
+   renv::restore()
+4) Run the pipeline:
+   source("Scripts/run_all.R")
+5) Outputs will appear in `outputs/` and figures in `figures/`.
 
 ## Statistical Assumptions (ANOVA)
 
