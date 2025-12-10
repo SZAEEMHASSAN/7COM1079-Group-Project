@@ -37,3 +37,12 @@ Final QA check and consistency summary written.
 - Post-hoc comparisons reported in `outputs/games_howell_posthoc.csv`.
 - Effect sizes & assumptions: `outputs/assumptions_effectsizes.txt`.
 - Key figures: see `Report/figures/`.
+
+# Statistical Interpretation (Summary)
+
+ANOVA indicates significant differences in on-road price across **Body Type** categories.
+Post-hoc (Games-Howell) results show which pairs differ most — see  
+`outputs/posthoc_top10.csv` for exact comparisons.
+
+Effect sizes (η² and ω²) suggest the magnitude of variation between groups.
+Together, these confirm that bike body type meaningfully influences pricing.
