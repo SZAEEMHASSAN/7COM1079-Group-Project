@@ -1,22 +1,21 @@
-=== Final QA Check (Ramya) ===
+=== Final QA Summary (Ramya – Day 5) ===
+Rows: 291 
+Cols: 2 
 
-Rows: 291   Cols: 2 
-Has Body.Type column: TRUE 
-Body.Type levels: 23 
+Missing Values:
+                     Column Missing
+On.road.price On.road.price       0
+Body.Type         Body.Type       0
 
-Missing values per column:
- - On.road.price: 0
- - Body.Type: 0
-
-Top Body.Type counts:
-
-                                       Cruiser Bikes                                         Sports Bikes 
-                                                  76                                                   51 
-                                      Commuter Bikes                                   Sports Naked Bikes 
-                                                  34                                                   30 
-              Adventure Tourer Bikes, Off Road Bikes                               Adventure Tourer Bikes 
-                                                  16                                                   15 
-                           Super Bikes, Sports Bikes                 Sports Naked Bikes, Cafe Racer Bikes 
-                                                   9                                                    7 
-                    Sports Naked Bikes, Sports Bikes Adventure Tourer Bikes, Tourer Bikes, Off Road Bikes 
-                                                   7                                                    6 
+Top 10 Body.Type counts:
+                                              Body.Type Count
+9                                         Cruiser Bikes    76
+14                                         Sports Bikes    51
+8                                        Commuter Bikes    34
+15                                   Sports Naked Bikes    30
+3                Adventure Tourer Bikes, Off Road Bikes    16
+1                                Adventure Tourer Bikes    15
+20                            Super Bikes, Sports Bikes     9
+16                 Sports Naked Bikes, Cafe Racer Bikes     7
+17                     Sports Naked Bikes, Sports Bikes     7
+6  Adventure Tourer Bikes, Tourer Bikes, Off Road Bikes     6
