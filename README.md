@@ -31,3 +31,9 @@ See `outputs/assumptions_effectsizes.txt` for details.
 
 ## QA Summary
 Final QA check and consistency summary written.
+
+## Results (Summary)
+- One-way ANOVA shows price differs by Body.Type (see `outputs/anova_summary.txt`).
+- Post-hoc comparisons reported in `outputs/games_howell_posthoc.csv`.
+- Effect sizes & assumptions: `outputs/assumptions_effectsizes.txt`.
+- Key figures: see `Report/figures/`.
