@@ -46,3 +46,14 @@ Post-hoc (Games-Howell) results show which pairs differ most — see
 
 Effect sizes (η² and ω²) suggest the magnitude of variation between groups.
 Together, these confirm that bike body type meaningfully influences pricing.
+
+
+# Submission Checklist – Ramya
+Cleaned dataset present → `data/Bike_Features_clean.csv`  
+ANOVA + post-hoc + effect sizes outputs verified → `outputs/`  
+QA summaries regenerated → `outputs/missing_values_ramya.csv`, `outputs/final_qa_check.txt`  
+All figures copied to `Report/figures/`  
+README and report updated  
+Final ZIP created in `release/`  
+
+All project files verified and synced for submission.
