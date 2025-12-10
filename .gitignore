@@ -1,0 +1,14 @@
+# Temporary / session files
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# OS / editor caches
+.DS_Store
+Thumbs.db
+
+# Release artifacts
+release/*.zip
+!outputs/*.csv
+!outputs/*.txt
