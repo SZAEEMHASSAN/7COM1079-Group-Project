@@ -1,0 +1,5 @@
+"kind","metric","value"
+"ANOVA","F",13.8749256578216
+"ANOVA","p",8.49711773312616e-33
+"EffectSize","eta2",0.4878
+"EffectSize","omega2",0.456
