@@ -43,3 +43,29 @@ bt <- sort(table(dat$body), decreasing = TRUE)
 dat$body <- factor(dat$body, levels = names(bt))
 
 cat("Counts per body (after clean):\n"); print(sort(table(dat$body), decreasing = TRUE))
+
+# Collapse rare categories to "Other" so the figure doesn't compress.
+min_n <- 5
+tbl <- sort(table(dat$body), decreasing = TRUE)
+keep_lvls <- names(tbl)[tbl >= min_n]
+
+dat_plot <- dat
+dat_plot$body <- as.character(dat_plot$body)
+dat_plot$body[!dat_plot$body %in% keep_lvls] <- "Other"
+dat_plot$body <- factor(dat_plot$body, levels = c(keep_lvls, "Other"))
+
+# short labels for axis
+short_labels <- function(lv){
+  x <- lv
+  x <- gsub("Adventure Tourer.*", "Adventure", x)
+  x <- gsub("Sports Naked.*",   "Sports Naked", x)
+  x <- gsub("Sports Tourer.*",  "Sports Tourer", x)
+  x <- gsub("Super Bikes.*",    "Super Bikes", x)
+  x <- gsub("Cafe Racer.*",     "Cafe Racer", x)
+  x <- gsub("Cruiser.*",        "Cruiser", x)
+  x <- gsub("Commuter.*",       "Commuter", x)
+  x <- gsub("Electric.*",       "Electric", x)
+  x <- gsub("Moped.*",          "Moped", x)
+  x <- gsub("Tourer.*",         "Tourer", x)
+  x
+}
