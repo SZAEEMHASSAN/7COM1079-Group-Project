@@ -1,62 +1,51 @@
-# 7COM1079-Group-Project
-# Bike Features Analysis
+# 7COM1079 — Group Project  Group B 182
+### Analysis of Bike Prices vs Body Type (R)
 
-This project explores how different bike body types affect prices
-using R programming (cleaning, visualisation, and ANOVA testing).
+---
 
-## How to reproduce
-1. Run `Scripts/analysis.R`
-2. Figures will be saved in the `figures/` folder.
-3. Report is in `Report/Group_Project_Report.docx`.
+## Overview
+This project analyses the relationship between **bike body type** and **on-road price (INR)** using R.
 
-## Contributors
-- Syed Zaeem Hassan
-- Fahad Ali
-- Vaibhav Sirigada
-- Ramya Kotagiri
+The dataset used is `Bike_Features.csv`, which contains multiple technical and categorical features of bikes such as engine displacement, mileage, and body type.
 
+The main goals are:
+1. Clean and prepare the dataset (remove invalid or non-categorical labels).
+2. Visualise the price distribution across body types.
+3. Perform a **One-Way ANOVA** (or **Welch ANOVA**) to check whether mean prices differ across categories.
+4. Export clean visualisations and a reproducible analysis pipeline.
 
-## How to Run the Project
-1) Install R (>=4.3) & RStudio (optional)
-2) In R console:
-   install.packages("renv")
-3) Clone this repo, then in the project root run:
-   renv::restore()
-4) Run the pipeline:
-   source("Scripts/run_all.R")
-5) Outputs will appear in `outputs/` and figures in `figures/`.
+---
 
-## Statistical Assumptions (ANOVA)
+## Folder Structure
 
-We validated assumptions on the cleaned dataset: residual normality (Shapiro–Wilk),
-homogeneity of variances (Levene’s test), and reported effect sizes (eta², ω²).
-See `outputs/assumptions_effectsizes.txt` for details.
+7COM1079-Group-Project/
+│
+├── data/
+│ └── Bike_Features.csv
+│
+├── Scripts/
+│ └── Analysis.R
+│
+├── figures/
+│ ├── fig_price_by_body.png
+│ └── fig_price_hist.png
+│
+└── docs/
+└── README.md
+---
 
-## QA Summary
-Final QA check and consistency summary written.
+## How to Run
 
-## Results (Summary)
-- One-way ANOVA shows price differs by Body.Type (see `outputs/anova_summary.txt`).
-- Post-hoc comparisons reported in `outputs/games_howell_posthoc.csv`.
-- Effect sizes & assumptions: `outputs/assumptions_effectsizes.txt`.
-- Key figures: see `Report/figures/`.
+### Prerequisites
+You need **R (≥4.0)** installed.  
+No external libraries are required (uses only base R functions).
 
-# Statistical Interpretation (Summary)
-
-ANOVA indicates significant differences in on-road price across **Body Type** categories.
-Post-hoc (Games-Howell) results show which pairs differ most — see  
-`outputs/posthoc_top10.csv` for exact comparisons.
-
-Effect sizes (η² and ω²) suggest the magnitude of variation between groups.
-Together, these confirm that bike body type meaningfully influences pricing.
-
-
-# Submission Checklist – Ramya
-Cleaned dataset present → `data/Bike_Features_clean.csv`  
-ANOVA + post-hoc + effect sizes outputs verified → `outputs/`  
-QA summaries regenerated → `outputs/missing_values_ramya.csv`, `outputs/final_qa_check.txt`  
-All figures copied to `Report/figures/`  
-README and report updated  
-Final ZIP created in `release/`  
-
-All project files verified and synced for submission.
+### Steps
+1. Clone or download the repository.
+2. Open RStudio or R console inside the Scripts folder.
+3. Run the analysis: ("Analysis.R").
+4. The script will:
+       - Load and clean data from ../data/Bike_Features.csv
+       - Generate and display figures
+       - Save all images to ../figures/
+       - Print statistical test results in the R console

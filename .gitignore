@@ -12,3 +12,17 @@ Thumbs.db
 release/*.zip
 !outputs/*.csv
 !outputs/*.txt
+
+# Ignore all image files (common types)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.tiff
+*.bmp
+*.svg
+
+# Optional: Ignore big raw data or cache folders
+outputs/raw/
+cache/
+temp/
