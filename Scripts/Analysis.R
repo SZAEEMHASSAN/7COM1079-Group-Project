@@ -1,72 +1,45 @@
-# analysis_anova.R
-# Author: Syed Zaeem Hassan
-# Purpose: Run one-way ANOVA on bike prices by body type
+data_path <- "../data/Bike_Features.csv"
+if (!file.exists(data_path)) stop("Dataset not found at ../data/Bike_Features.csv")
+df <- read.csv(data_path, stringsAsFactors = FALSE)
 
-# 1. Load dataset (go up one folder to 'data/')
-bike_data <- read.csv("../data/Bike_Features.csv", stringsAsFactors = TRUE)
+# Explicit columns (from your CSV):
+price_raw <- df[["On.road.prize"]]
+body_raw  <- df[["Body.Type"]]
+if (is.null(price_raw) || is.null(body_raw)) {
+  stop("Required columns not found: On.road.prize and Body.Type")
+}
 
-# 2. Clean data
-bike_clean <- subset(bike_data, !is.na(On.road.prize) & !is.na(Body.Type))
-bike_clean$Body.Type <- as.factor(bike_clean$Body.Type)
+# price -> numeric; body -> character
+price <- suppressWarnings(as.numeric(gsub("[^0-9.]", "", as.character(price_raw))))
+body  <- trimws(as.character(body_raw))
 
-# 3. Run ANOVA
-anova_model <- aov(On.road.prize ~ Body.Type, data = bike_clean)
-anova_result <- summary(anova_model)
+# basic NA cleanup
+price[price == 0] <- NA
+body[body %in% c("", "NA", "Yes")] <- NA
 
-# 4. Save outputs (go up one folder to root level)
-if (!dir.exists("../outputs")) dir.create("../outputs", recursive = TRUE)
+dat <- data.frame(price = price, body = body, stringsAsFactors = FALSE)
+dat <- dat[!is.na(dat$price) & !is.na(dat$body), , drop = FALSE]
 
-# Save CSV output
-write.csv(anova_result[[1]], "../outputs/anova_summary.csv", row.names = TRUE)
+# remove non-body junk
+dat <- dat[!grepl("mm", dat$body, ignore.case = TRUE), ]
+dat <- dat[!grepl(" L$|Litre|Litres", dat$body, ignore.case = TRUE), ]
+dat <- dat[!grepl("Halogen|LED|fork|Suspension|bo\\b", dat$body, ignore.case = TRUE), ]
 
-# Save readable text output
-sink("../outputs/anova_summary.txt")
-cat("=== One-way ANOVA Summary ===\n")
-print(anova_result)
-sink()
+# merge similar labels (baseline)
+merge_one <- function(x, pattern, to) gsub(pattern, to, x, ignore.case = TRUE)
+dat$body <- merge_one(dat$body, "Adventure Tourer Bikes, Off Road Bikes", "Adventure Tourer Bikes")
+dat$body <- merge_one(dat$body, "Adventure Tourer Bikes, Tourer Bikes, Off Road Bikes", "Adventure Tourer Bikes")
+dat$body <- merge_one(dat$body, "Adventure Tourer Bikes, Sports Tourer Bikes", "Adventure Tourer Bikes")
+dat$body <- merge_one(dat$body, "Sports Naked Bikes, Sports Bikes", "Sports Naked Bikes")
+dat$body <- merge_one(dat$body, "Super Bikes, Sports Bikes", "Super Bikes")
+dat$body <- merge_one(dat$body, "Cruiser Bikes, Cafe Racer Bikes", "Cruiser Bikes")
+dat$body <- merge_one(dat$body, "Cruiser Bikes, Tourer Bikes", "Cruiser Bikes")
+dat$body <- merge_one(dat$body, "Sports Naked Bikes, Cafe Racer Bikes", "Sports Naked Bikes")
+dat$body <- merge_one(dat$body, "Adventure Tourer Bikes, Cruiser Bikes, Off Road Bikes", "Adventure Tourer Bikes")
+dat <- dat[!grepl("\\+", dat$body), , drop = FALSE]
 
-# Optional: category counts table
-counts <- table(bike_clean$Body.Type)
-write.csv(counts, "../outputs/bodytype_counts.csv", row.names = TRUE)
+# ORDER by freq
+bt <- sort(table(dat$body), decreasing = TRUE)
+dat$body <- factor(dat$body, levels = names(bt))
 
-cat("✅ ANOVA completed successfully! Files saved in ../outputs/\n")
-message("=== Analysis.R (ANOVA on cleaned data) ===")
-
-# Load cleaned data
-clean_path <- "../data/Bike_Features_clean.csv"
-if (!file.exists(clean_path)) stop("Cleaned file missing. Run clean_eda.R first.")
-d <- read.csv(clean_path, stringsAsFactors = TRUE)
-
-# Basic ANOVA
-fit <- aov(On.road.price ~ Body.Type, data = d)
-sm  <- summary(fit)
-
-# Save CSV + TXT summary
-if (!dir.exists("../outputs")) dir.create("../outputs", recursive = TRUE)
-write.csv(sm[[1]], "../outputs/anova_summary.csv", row.names = TRUE)
-
-sink("../outputs/anova_summary.txt")
-cat("=== One-way ANOVA (On.road.price ~ Body.Type) ===\n"); print(sm)
-sink()
-
-# Mean ± SE by Body.Type
-m  <- aggregate(On.road.price ~ Body.Type, d, mean)
-n  <- aggregate(On.road.price ~ Body.Type, d, length)
-sd <- aggregate(On.road.price ~ Body.Type, d, sd)
-colnames(m)  <- c("Body.Type","mean")
-colnames(n)  <- c("Body.Type","n")
-colnames(sd) <- c("Body.Type","sd")
-mm <- merge(merge(m,n,"Body.Type"), sd,"Body.Type")
-mm$se <- mm$sd / sqrt(mm$n)
-mm <- mm[order(mm$mean, decreasing=TRUE), ]
-
-# Bar plot with error bars
-if (!dir.exists("../figures")) dir.create("../figures", recursive = TRUE)
-png("../figures/anova_means_se.png", width=1200, height=700)
-bp <- barplot(mm$mean, names.arg = mm$Body.Type, las=2,
-              main="Mean On-road Price by Body Type (±SE)",
-              ylab="Mean price (INR)", cex.names=0.8)
-arrows(bp, mm$mean-mm$se, bp, mm$mean+mm$se, angle=90, code=3, length=0.05)
-dev.off()
-
-message("✅ ANOVA summary & plot saved.")
+cat("Counts per body (after clean):\n"); print(sort(table(dat$body), decreasing = TRUE))
