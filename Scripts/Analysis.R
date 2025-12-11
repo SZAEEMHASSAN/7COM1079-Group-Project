@@ -69,3 +69,51 @@ short_labels <- function(lv){
   x <- gsub("Tourer.*",         "Tourer", x)
   x
 }
+
+
+
+
+
+
+# valid groups for testing (>=2 obs, variance > 0)
+gsize <- tapply(dat$price, dat$body, length)
+gvar  <- tapply(dat$price, dat$body, function(x) var(x, na.rm = TRUE))
+keep  <- names(gsize)[gsize >= 2 & !is.na(gvar) & gvar > 0]
+dat2  <- droplevels(dat[dat$body %in% keep, , drop = FALSE])
+k     <- nlevels(dat2$body)
+
+cat("\nValid groups after cleaning:", k, "\n")
+if (k < 2) stop("Not enough valid groups left for ANOVA/Welch (need ≥2).")
+
+fit_aov <- aov(price ~ body, data = dat2)
+resid_aov <- residuals(fit_aov)
+shap <- if (length(resid_aov) >= 3 && length(resid_aov) <= 5000) shapiro.test(resid_aov) else NULL
+vars <- tapply(dat2$price, dat2$body, var, na.rm = TRUE)
+vr   <- if (length(vars) >= 2) max(vars) / min(vars) else Inf
+
+cat("\n--- Assumption checks ---\n")
+if (!is.null(shap)) cat("Shapiro p (residual normality):", signif(shap$p.value, 4), "\n")
+cat("Variance ratio (max/min):", if (is.finite(vr)) signif(vr, 4) else "Inf", " (≤4 ≈ OK for ANOVA)\n")
+
+use_anova <- (is.null(shap) || shap$p.value > 0.05) && is.finite(vr) && vr < 4
+
+cat("\n--- Chosen test ---\n")
+if (use_anova) {
+  cat("Using ONE-WAY ANOVA\n\n")
+  s <- summary(fit_aov)
+  print(s)
+  tab <- s[[1]]
+  cat("\nANOVA result: F =", signif(unname(tab$`F value`[1]), 4),
+      " p =", signif(unname(tab$`Pr(>F)`[1]), 4), "\n")
+} else {
+  cat("Using WELCH ANOVA\n\n")
+  w <- oneway.test(price ~ body, data = dat2, var.equal = FALSE)
+  print(w)
+  cat("\nWelch result: F =", signif(unname(w$statistic), 4),
+      " df =", signif(unname(w$parameter), 4),
+      " p =", signif(unname(w$p.value), 4), "\n")
+}
+
+cat("\nINTERPRETATION GUIDE:\n")
+cat("- p < 0.05 → Mean price differs significantly across body types.\n")
+cat("- p ≥ 0.05 → No strong evidence of a difference in mean price.\n")
