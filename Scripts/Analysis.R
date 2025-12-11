@@ -71,7 +71,51 @@ short_labels <- function(lv){
 }
 
 
+fig_dir <- "../figures"
+if (!dir.exists(fig_dir)) dir.create(fig_dir, recursive = TRUE)
 
+save_plot <- function(file, expr, width = 12, height = 8, units = "in", res = 200) {
+  expr()  # show on screen
+  png(filename = file.path(fig_dir, file), width = width, height = height, units = units, res = res)
+  expr()  # save to PNG
+  dev.off()
+  cat("Saved:", file.path(fig_dir, file), "\n")
+}
+
+plot_box <- function() {
+  par(mar = c(6, 6, 5, 2))   # bring plot lower; less empty space
+  labs <- short_labels(levels(dat_plot$body))
+  
+  boxplot(price ~ body, data = dat_plot,
+          main = "On-road Price by Bike Body Type",
+          xlab = "", ylab = "On-road Price (₹)",
+          names = labs, las = 2,
+          cex.axis = 0.85, cex.lab = 1.15,
+          col = "skyblue", boxwex = 0.6,
+          outline = TRUE, yaxt = "n")
+  
+  stripchart(price ~ body, data = dat_plot, method = "jitter",
+             pch = 16, cex = 0.6, col = rgb(0, 0, 1, 0.4),
+             vertical = TRUE, add = TRUE)
+  
+  ticks <- pretty(dat_plot$price)
+  axis(2, at = ticks, labels = paste0("₹", format(ticks, big.mark = ",", scientific = FALSE)))
+  mtext("Bike Body Type (rare categories grouped as 'Other')", side = 1, line = 4)
+}
+save_plot("fig_price_by_body.png", plot_box, width = 12, height = 8)
+
+plot_hist <- function() {
+  par(mar = c(6, 6, 5, 2))
+  hist(dat$price, breaks = 30,
+       main = "Distribution of On-road Price (All Bikes)",
+       xlab = "On-road Price (₹)", ylab = "Count",
+       col = "lightgray", border = "white", yaxt = "n", xaxt = "n")
+  ticks_x <- pretty(dat$price)
+  axis(1, at = ticks_x, labels = format(ticks_x, big.mark = ",", scientific = FALSE))
+  axis(2)
+  box()
+}
+save_plot("fig_price_hist.png", plot_hist, width = 10, height = 7)
 
 
 
